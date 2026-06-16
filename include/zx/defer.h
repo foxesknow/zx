@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <utility>
+
 namespace zx
 {
 
@@ -15,7 +17,7 @@ private:
 
 public:
     defer() = delete;
-    defer(const defer &) = delete;
+    defer(const defer&) = delete;
     defer(defer &&rhs) : m_Function(std::move(rhs.m_Function)), m_ShouldExecute(rhs.m_ShouldExecute)
     {
         rhs.m_ShouldExecute = false;
@@ -25,9 +27,17 @@ public:
     {
     }
 
+    defer &operator=(const defer&) = delete;
+    defer &operator=(defer &&rhs) = delete;
+
     bool has_executed() const noexcept
     {
         return !m_ShouldExecute;
+    }
+
+    void cancel() noexcept
+    {
+        m_ShouldExecute = false;
     }
 
     bool execute()
