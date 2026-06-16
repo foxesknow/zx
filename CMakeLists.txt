@@ -7,11 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED  ON)
 
 file(GLOB_RECURSE ZX_HEADERS "include/zx/**.h")
 
-add_library(${PROJECT_NAME} INTERFACE ${ZX_HEADERS})
+add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(
     ${PROJECT_NAME}
     INTERFACE
     $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+ #   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+add_subdirectory(tests)
